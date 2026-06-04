@@ -1,0 +1,17 @@
+[project]
+name = "new-business-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-auth>=2.53.0",
+    "google-auth-httplib2>=0.4.0",
+    "google-auth-oauthlib>=1.4.0",
+    "gspread>=6.2.1",
+    "pandas>=3.0.3",
+    "playwright>=1.60.0",
+    "pytest>=9.0.3",
+    "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
+]
