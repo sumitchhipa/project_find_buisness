@@ -5,6 +5,13 @@ from src.exporters.google_sheets_exporter import (
     export_to_google_sheet
 )
 
+from src.notifications.email_notifier import (
+    send_email_notification
+)
+from src.notifications.telegram_notifier import (
+    send_telegram_notification
+)
+
 from src.scraper.maps_scraper import (
     search_google_maps,
     get_business_links,
@@ -17,7 +24,15 @@ from src.database.db import (
     save_business,
     get_total_businesses
 )
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+APP_PASSWORD = os.getenv("APP_PASSWORD")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 def main():
 
@@ -75,6 +90,30 @@ def main():
                         total_new_businesses.append(
                             details
                         )
+                        try:
+                            send_telegram_notification( details )
+                        except Exception as e:
+                             print(
+                                 f"TELEGRAM ERROR: {e}"
+                                                         )
+
+                        try:
+
+                            send_email_notification(
+                                details
+                            )
+
+                            print(
+                                f"EMAIL SENT: "
+                                f"{details['name']}"
+                            )
+
+                        except Exception as email_error:
+
+                            print(
+                                f"EMAIL ERROR: "
+                                f"{email_error}"
+                            )
 
                         print(
                             f"NEW BUSINESS FOUND: "
